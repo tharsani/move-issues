@@ -12,7 +12,7 @@ module.exports = class Move {
   }
 
   getAuthorLink(user, mention = false) {
-    const baseUrl = 'https://github.com';
+    const baseUrl = 'https://github.ibm.com';
     if (user.endsWith('[bot]')) {
       return `[${user}](${baseUrl}/apps/${user.replace('[bot]', '')})`;
     }
@@ -25,7 +25,7 @@ module.exports = class Move {
   getIssueLink(issue) {
     const repo = `${issue.owner}/${issue.repo}`;
     const number = issue.issue_number;
-    return `[${repo}#${number}](https://github.com/${repo}/issues/${number})`;
+    return `[${repo}#${number}](https://github.ibm.com/${repo}/issues/${number})`;
   }
 
   get issueOpen() {
@@ -283,7 +283,7 @@ module.exports = class Move {
 
     const sourceIssueData = (await sourceGh.issues.get({
       ...source,
-      headers: {accept: 'application/vnd.github.v3.html+json'}
+      headers: {accept: 'application/vnd.github.ibm.v3.html+json'}
     })).data;
     const issueAuthor = sourceIssueData.user.login;
     const issueCreatedAt = moment(sourceIssueData.created_at).format(
@@ -326,7 +326,7 @@ module.exports = class Move {
       sourceGh.issues.listComments.endpoint.merge({
         ...source,
         per_page: 100,
-        headers: {accept: 'application/vnd.github.v3.html+json'}
+        headers: {accept: 'application/vnd.github.ibm.v3.html+json'}
       }),
       async response => {
         for (const comment of response.data) {
